@@ -1,0 +1,261 @@
+/* Transitions.dev: thinking-states */
+:root {
+  --think-hold: 2000ms;
+  --think-swap: 150ms;
+  --think-gap: 50ms;
+  --think-distance: 8px;
+  --think-blur: 2px;
+  --think-shimmer: 2000ms;
+  --think-base: #7c7c7c;
+  --think-highlight: #0d0d0d;
+  --think-ease: ease-in-out;
+}
+
+/* Transitions.dev: thinking-states */
+/* Set your type on .t-think: the sizer only reports the right
+   width if it is set in the same font as the line. */
+.t-think { position: relative; display: inline-block; text-align: center; }
+.t-think-sizer { display: block; visibility: hidden; white-space: nowrap; }
+.t-think-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: block;
+  color: var(--think-base);
+  white-space: nowrap;
+  transform: translateY(0);
+  filter: blur(0);
+  opacity: 1;
+  transition:
+    transform var(--think-swap) var(--think-ease),
+    filter var(--think-swap) var(--think-ease),
+    opacity var(--think-swap) var(--think-ease);
+  will-change: transform, filter, opacity;
+}
+/* Shimmer sweeps the glyphs only (background-clip: text). */
+.t-think-text::before {
+  content: attr(data-text);
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(90deg,
+    transparent 0%, transparent 40%,
+    var(--think-highlight) 50%,
+    transparent 60%, transparent 100%);
+  background-size: 400% 100%;
+  background-repeat: no-repeat;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: t-think-shimmer var(--think-shimmer) linear infinite;
+}
+@keyframes t-think-shimmer {
+  0%   { background-position: 100% 0; }
+  100% { background-position: 0% 0; }
+}
+/* The outgoing line floats over the box so both halves animate. */
+.t-think-text.is-exit {
+  transform: translateY(calc(var(--think-distance) * -1));
+  filter: blur(var(--think-blur));
+  opacity: 0;
+}
+.t-think-text.is-enter-start {
+  transition: none;
+  transform: translateY(var(--think-distance));
+  filter: blur(var(--think-blur));
+  opacity: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-think-text { transition: none !important; transform: none !important; filter: none !important; }
+  .t-think-text::before { display: none !important; }
+}
+
+/* Transitions.dev: reasoning-stream */
+:root {
+  --reason-hold: 840ms;
+  --reason-step: 500ms;
+  --reason-lines: 2;
+  --reason-fade: 28px;
+  --reason-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Transitions.dev: reasoning-stream */
+.t-reason { position: relative; overflow: hidden; }
+.t-reason-viewport {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  /* Edge fades are a mask, not painted gradients, so the card
+     background can be anything. */
+  -webkit-mask-image: linear-gradient(
+    transparent 0,
+    black var(--reason-fade),
+    black calc(100% - var(--reason-fade)),
+    transparent 100%);
+  mask-image: linear-gradient(
+    transparent 0,
+    black var(--reason-fade),
+    black calc(100% - var(--reason-fade)),
+    transparent 100%);
+}
+.t-reason-scroll {
+  position: absolute;
+  left: 0;
+  right: 0;
+  transform: translateY(0);
+  will-change: transform;
+}
+/* JS drives the tween:
+     scroll.style.transition = 'transform var(--reason-step) var(--reason-ease)';
+     scroll.style.transform  = 'translateY(-' + offset + 'px)';
+   and wraps the offset by one copy's height with transition: none. */
+
+@media (prefers-reduced-motion: reduce) {
+  .t-reason-scroll { transition: none !important; transform: none !important; }
+}
+
+/* Transitions.dev: streaming-text */
+:root {
+  --stream-gap: 60ms;
+  --stream-fade: 350ms;
+  --stream-blur: 1px;
+  --stream-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Transitions.dev: streaming-text */
+.t-stream-w {
+  opacity: 0;
+  filter: blur(var(--stream-blur));
+  transition:
+    opacity var(--stream-fade) var(--stream-ease),
+    filter var(--stream-fade) var(--stream-ease);
+}
+.t-stream-w.is-in {
+  opacity: 1;
+  filter: blur(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-stream-w { transition: none !important; filter: none !important; opacity: 1 !important; }
+}
+
+/* Transitions.dev: matrix-loader */
+:root {
+  --matrix-cycle: 1200ms;
+  --matrix-base: #d9d9d9;
+  --matrix-active: #85858f;
+  --matrix-ease: ease-in-out;
+}
+
+/* Transitions.dev: matrix-loader */
+.t-matrix {
+  display: grid;
+  grid-template-columns: repeat(4, 2px);
+  grid-auto-rows: 2px;
+  gap: 2px;
+}
+.t-matrix i {
+  display: block;
+  background: var(--matrix-base);
+  animation: t-matrix-pulse var(--matrix-cycle) var(--matrix-ease) infinite;
+  animation-delay: calc(var(--d, 0) * 1ms);
+}
+/* Hole positions (rounded variants) render nothing. */
+.t-matrix i.is-gap { visibility: hidden; animation: none; }
+@keyframes t-matrix-pulse {
+  0%, 45%, 100% { background-color: var(--matrix-base); }
+  15%           { background-color: var(--matrix-active); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-matrix i { animation: none !important; }
+}
+
+/* Transitions.dev: banner-stacking */
+:root {
+  --stack-open: 350ms;
+  --stack-close: 250ms;
+  --stack-rise: 80px;
+  --stack-blur: 2px;
+  --stack-scale: 0.97;
+  --stack-peek: 12px;
+  --stack-spread-gap: 8px;
+  --stack-depth-scale: 0.06;
+  --stack-depth-fade: 0.4;
+  --stack-ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Transitions.dev: banner-stacking */
+.t-stack { position: relative; }
+.t-stack-banner {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  /* Centre origin so an arriving banner scales like a toast; the
+     push-back depths switch to the bottom edge, which they can do
+     freely because the swap happens at identity. */
+  transform-origin: 50% 50%;
+  /* Explicit blur(0) rather than an unset filter — blur → none is
+     not reliably interpolated, and the cross-blur would snap. */
+  filter: blur(0);
+  will-change: transform, opacity, filter;
+  transition:
+    transform var(--stack-open) var(--stack-ease),
+    opacity var(--stack-open) var(--stack-ease),
+    filter var(--stack-open) var(--stack-ease);
+}
+.t-stack-banner[data-depth="0"] {
+  z-index: 3;
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+.t-stack-banner[data-depth="1"] {
+  z-index: 2;
+  transform-origin: 50% 100%;
+  transform: translateY(calc(var(--stack-peek) * -1))
+             scale(calc(1 - var(--stack-depth-scale)));
+  opacity: calc(1 - var(--stack-depth-fade));
+}
+.t-stack-banner[data-depth="2"] {
+  z-index: 1;
+  transform-origin: 50% 100%;
+  transform: translateY(calc(var(--stack-peek) * -2))
+             scale(calc(1 - var(--stack-depth-scale) * 2));
+  opacity: calc(1 - var(--stack-depth-fade) * 1.6);
+}
+/* Spread: newest stays put, older ones climb one banner height
+   each (100% = the banner's own height). Driven by a class, not
+   :hover — the gaps between spread banners belong to no element. */
+.t-stack.is-spread .t-stack-banner[data-depth="1"],
+.t-stack.is-spread .t-stack-banner[data-depth="2"] { opacity: 1; }
+.t-stack.is-spread .t-stack-banner[data-depth="1"] {
+  transform: translateY(calc((100% + var(--stack-spread-gap)) * -1)) scale(1);
+}
+.t-stack.is-spread .t-stack-banner[data-depth="2"] {
+  transform: translateY(calc((100% + var(--stack-spread-gap)) * -2)) scale(1);
+}
+.t-stack-banner.is-enter {
+  transition: none;
+  transform: translateY(var(--stack-rise)) scale(var(--stack-scale));
+  opacity: 0;
+  filter: blur(var(--stack-blur));
+}
+.t-stack-banner.is-leaving {
+  z-index: 0;
+  transform-origin: 50% 100%;
+  transform: translateY(calc(var(--stack-peek) * -3))
+             scale(calc(1 - var(--stack-depth-scale) * 3));
+  opacity: 0;
+  filter: blur(var(--stack-blur));
+  transition:
+    transform var(--stack-close) var(--stack-ease),
+    opacity var(--stack-close) var(--stack-ease),
+    filter var(--stack-close) var(--stack-ease);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .t-stack-banner { transition: none !important; transform: none !important; filter: none !important; }
+}
