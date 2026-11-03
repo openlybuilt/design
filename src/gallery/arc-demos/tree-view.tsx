@@ -1,0 +1,13 @@
+import { TreeView, type TreeNode } from "@/vendor/arc/tree-view/tree-view";
+
+const files: TreeNode[] = [
+  { id: "app", label: "app", children: [
+    { id: "page", label: "page.tsx" },
+    { id: "layout", label: "layout.tsx" },
+  ] },
+  { id: "readme", label: "README.md" },
+];
+
+export function Files() {
+  return <TreeView nodes={files} defaultExpandedIds={["app"]} />;
+}

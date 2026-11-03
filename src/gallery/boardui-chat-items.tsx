@@ -1,0 +1,6 @@
+import {useState} from 'react';
+import {AgentMessage} from '../vendor/boardui/upstream/components/application/agent-chat/agent-chat-message';
+import {AgentComposer} from '../vendor/boardui/upstream/components/application/agent-chat/agent-composer';
+import type {GalleryItem} from './items';
+function AgentChatPreview(){const [value,setValue]=useState('');const [messages,setMessages]=useState<{role:string;text:string}[]>([{role:'assistant',text:'What would you like to work on?'}]);function send(){const text=value.trim();if(!text)return;setMessages(m=>[...m,{role:'user',text},{role:'assistant',text:'This is a local preview of the conversation.'}]);setValue('')}return <div className="board-chat-preview"><div className="board-chat-messages">{messages.map((m,i)=><AgentMessage key={i} role={m.role} text={m.text}/>)}</div><AgentComposer provider="Local preview" value={value} onValueChange={setValue} onSubmit={send} onStop={()=>{}} busy={false} messageCount={messages.length}/></div>}
+export const boarduiChatItems:GalleryItem[]=[{id:'boardui-agent-chat',name:'Agent chat',category:'Chat',source:'BoardUI',sourceUrl:'https://www.boardui.com/components/chat-starter',render:()=> <AgentChatPreview/>}];

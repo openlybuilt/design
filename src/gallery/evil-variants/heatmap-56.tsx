@@ -1,0 +1,57 @@
+import type { Preferences } from "../../types";
+"use client";
+
+import {
+  EvilHeatmapChart,
+  type ChartConfig,
+  type HeatmapDatum,
+} from "@/registry/charts/recharts-heatmap-chart";
+
+// Error-budget burn per day — mostly quiet, with the odd incident spike.
+function buildIncidents(seed: number): HeatmapDatum[] {
+  let state = seed;
+  const random = () => {
+    state = (state * 1664525 + 1013904223) % 4294967296;
+    return state / 4294967296;
+  };
+  const end = Date.UTC(2025, 11, 31);
+  const data: HeatmapDatum[] = [];
+  for (let i = 364; i >= 0; i--) {
+    const roll = random();
+    if (roll < 0.45) continue;
+    const value = roll > 0.96 ? Math.ceil(random() * 40) + 10 : Math.ceil(random() * 5);
+    data.push({ date: new Date(end - i * 86_400_000).toISOString().slice(0, 10), value });
+  }
+  return data;
+}
+
+const data = buildIncidents(19);
+
+
+
+export function EvilExampleHeatmapChart({prefs}: {prefs: Preferences}) {
+const chartConfig = {
+  errors: {
+    label: "Errors",
+    colors: {
+      light: [prefs.accent, prefs.active, prefs.success],
+      dark: [prefs.warning, prefs.muted, prefs.accent],
+    },
+  },
+} satisfies ChartConfig;
+  return (
+    <EvilHeatmapChart
+      className="h-full w-full p-4"
+      data={data}
+      config={chartConfig}
+      thresholds={[3, 10]} // [!code highlight]
+    >
+      <EvilHeatmapChart.Cell dataKey="errors" />
+      <EvilHeatmapChart.MonthLabel />
+      <EvilHeatmapChart.DayLabel />
+      <EvilHeatmapChart.Tooltip />
+      <EvilHeatmapChart.Legend lessLabel="Quiet" moreLabel="Incident" />
+    </EvilHeatmapChart>
+  );
+}
+
