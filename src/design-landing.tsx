@@ -85,7 +85,7 @@ function DesignLanding() {
     <div className="design-ribbon" aria-hidden="true"><RibbonGlow background="#111111" color1={colorProgress <= 1 ? mixColor('#2fd3f2', '#43dc8b', colorProgress) : mixColor('#43dc8b', '#f45151', colorProgress - 1)} color2={colorProgress <= 1 ? mixColor('#7b61ff', '#13834f', colorProgress) : mixColor('#13834f', '#9b1d32', colorProgress - 1)} speed={reduced ? 0 : 50} hover={reduced ? 0 : 100} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', minWidth: 0, minHeight: 0 }}/><div className="design-dark-scrim"/></div>
     <header className="design-header">
       <nav aria-label="Main navigation">
-        <a className="design-logo" href={sitePaths.home} aria-label="Openly home"><img src="/assets/o-ring-white-transparent.svg" alt=""/></a>
+        <a className="design-logo" href={sitePaths.home} aria-label="Openly home">Openly</a>
         <div className="design-links">
         <DropdownMenu openOnHover label="Agents" align="center" triggerClassName="design-agents-trigger" menuClassName="design-agents-menu" items={[
           { label: 'Computer-use', onSelect: () => { window.location.href = sitePaths.computerUse; } },
