@@ -51,6 +51,7 @@ import { canvasExtraItems } from './canvas-extra-items';
 import { canvasObjectItems } from './canvas-object-items';
 import { librariesExtraItems } from './libraries-extra-items';
 import { transitionItems } from './transition-items';
+import { benchoItems } from './bencho-items';
 export type GalleryItem = {id:string; name:string; category:Category; source:string; sourceUrl?:string; render:(prefs:Preferences)=>ReactNode};
 const points=[24,38,32,55,45,68,61];
 const dates=points.map((value,i)=>({key:String(i),label:`Day ${i+1}`,axisLabel:String(i+1),value,values:{runs:value}}));
@@ -59,6 +60,7 @@ function DropdownDemo(){const [choice,setChoice]=useState('');return <div classN
 const tableColumns = [{key:'name',label:'Workflow',sortable:true},{key:'status',label:'Status',sortable:true}];
 const tableRows = [{id:'1',name:'Intake',status:'Ready'},{id:'2',name:'Follow-up',status:'Draft'},{id:'3',name:'Review',status:'Ready'}];
 export const items:GalleryItem[] = [
+ ...benchoItems,
  ...aiItems,
  ...affectItems,
  ...affectExtraItems,
