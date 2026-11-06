@@ -89,10 +89,8 @@ function DesignLanding() {
         <div className="design-links">
         <DropdownMenu openOnHover label="Agents" align="center" triggerClassName="design-agents-trigger" menuClassName="design-agents-menu" items={[
           { label: 'Computer-use', onSelect: () => { window.location.href = sitePaths.computerUse; } },
-          { label: 'Research', disabled: true },
         ]}/>
         <DesignMenu current section="overview" triggerClassName="design-main-trigger" menuClassName="design-main-menu"/>
-        <button type="button" disabled>Energy</button>
         </div>
         <SocialIcons className="design-socials"/>
       </nav>
