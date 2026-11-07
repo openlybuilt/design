@@ -13,9 +13,9 @@ function Commands(){const [choice,set]=useState('');return <div><button classNam
 export const kobraMoreItems:GalleryItem[]=[
  {id:'kobra-navigation-menu',name:'Navigation menu',category:'Controls',source:'Kobra',sourceUrl:'https://kobra.systems/components/navigation-menu',render:()=> <Menu/>},
  {id:'kobra-conversation',name:'Conversation',category:'Chat',source:'Kobra',sourceUrl:'https://kobra.systems/components/conversation',render:()=> <Conversation><ConversationBubble align="start"><ConversationContent>Hello! How can I help?</ConversationContent></ConversationBubble><ConversationBubble align="end"><ConversationContent>Let’s get started.</ConversationContent></ConversationBubble></Conversation>},
- {id:'kobra-halftone-dots',name:'Halftone dots',category:'Effects',source:'Kobra',sourceUrl:'https://kobra.systems/components/halftone-dots',render:p=> <HalftoneDots src="/assets/preview-landscape.svg" accent={p.accent} style={{height:150,width:220}}/>},
+ {id:'kobra-halftone-dots',name:'Halftone dots',category:'Effects',source:'Kobra',sourceUrl:'https://kobra.systems/components/halftone-dots',render:p=> <HalftoneDots src={`${import.meta.env.BASE_URL}assets/preview-landscape.svg`} accent={p.accent} style={{height:150,width:220}}/>},
  {id:'kobra-morphing-icons',name:'Morphing icons',category:'Icons',source:'Kobra',sourceUrl:'https://kobra.systems/components/morphing-icons',render:()=> <Morph/>},
  {id:'kobra-sound',name:'Sound control',category:'Controls',source:'Kobra',sourceUrl:'https://kobra.systems/components/sound',render:()=> <SoundEffects><div className="sound-preview"><SoundToggle className="save"/><button type="button" className="save" data-sound="swoosh">Try a sound</button></div></SoundEffects>},
- {id:'kobra-video',name:'Video player',category:'Effects',source:'Kobra',sourceUrl:'https://kobra.systems/components/video',render:()=> <Video src="/assets/video/liquid.webm" title="Liquid preview" glass="blur"/>},
+ {id:'kobra-video',name:'Video player',category:'Effects',source:'Kobra',sourceUrl:'https://kobra.systems/components/video',render:()=> <Video src={`${import.meta.env.BASE_URL}assets/video/liquid.webm`} title="Liquid preview" glass="blur"/>},
  {id:'kobra-command-menu',name:'Command menu',category:'Controls',source:'Kobra',sourceUrl:'https://kobra.systems/components/command-menu',render:()=> <Commands/>},
 ];

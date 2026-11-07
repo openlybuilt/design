@@ -128,7 +128,7 @@ function GlyphIcon({ icon: Icon }: { icon: typeof RiGlobalLine }) {
 
 /** Figma's exact Google Meet mark, 20×20 (`public/brand/google_meet.png`). */
 function GoogleMeetIcon() {
-  return <img src="/assets/boardui-meet.svg" alt="" width={20} height={20} className="size-5 shrink-0" />;
+  return <img src={`${import.meta.env.BASE_URL}assets/boardui-meet.svg`} alt="" width={20} height={20} className="size-5 shrink-0" />;
 }
 
 function HourFormatToggle({ use24h, onChange }: { use24h: boolean; onChange: (use24h: boolean) => void }) {
