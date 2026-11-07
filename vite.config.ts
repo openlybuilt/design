@@ -4,7 +4,6 @@ import tailwindcss from '@tailwindcss/vite';
 import { fileURLToPath } from 'node:url';
 import { readFile, writeFile, rename } from 'node:fs/promises';
 import { join, dirname } from 'node:path';
-import { requestsPlugin } from './requests-plugin';
 const here = dirname(fileURLToPath(import.meta.url));
 const stateFile = join(here, 'preferences.json');
 function siteRoutes(): Plugin {
@@ -23,4 +22,4 @@ function persistence(): Plugin { return { name:'local-preferences', configureSer
   const origin=req.headers.origin; if (origin && origin !== `http://${req.headers.host}`) { res.statusCode=403;res.end('{}');return; }
   try { let body=''; for await (const chunk of req) { body+=chunk; if(body.length>30000) throw Error('Too large'); } const obj=JSON.parse(body); const colors=['page','surface','input','text','muted','accent','success','error','warning','active']; const numeric=['weight','heading','body','radius','spacing','speed']; if(!obj || typeof obj!=='object' || colors.some(k=>!/^#[0-9a-fA-F]{6}$/.test(obj[k])) || numeric.some(k=>typeof obj[k]!=='number'||!Number.isFinite(obj[k])) || !['Manrope','system-ui','Georgia',...fontzzFonts].includes(obj.font) || !['outlined','solid','soft'].includes(obj.mainButton) || !['text','outlined','soft'].includes(obj.secondaryButton) || !Array.isArray(obj.saved) || obj.saved.some((s:unknown)=>typeof s!=='string'||s.length>100)) throw Error('Invalid preferences'); const tmp=stateFile+'.tmp'; await writeFile(tmp,JSON.stringify(obj,null,2)+'\n','utf8'); await rename(tmp,stateFile); res.end(JSON.stringify({ok:true})); } catch { res.statusCode=400; res.end(JSON.stringify({error:'Could not save preferences'})); }
  }); } }; }
-export default defineConfig({optimizeDeps:{esbuildOptions:{jsx:'automatic'}},plugins:[tailwindcss(),siteRoutes(),persistence(),requestsPlugin(here)],resolve:{alias:{'@':join(here,'src')}},build:{rollupOptions:{input:{design:join(here,'index.html'),components:join(here,'components.html')}}},server:{host:'127.0.0.1',port:4176,strictPort:true,watch:{ignored:[stateFile,`${stateFile}.tmp`]}}});
+export default defineConfig({optimizeDeps:{esbuildOptions:{jsx:'automatic'}},plugins:[tailwindcss(),siteRoutes(),persistence()],resolve:{alias:{'@':join(here,'src')}},build:{rollupOptions:{input:{design:join(here,'index.html'),components:join(here,'components.html')}}},server:{host:'127.0.0.1',port:4176,strictPort:true,watch:{ignored:[stateFile,`${stateFile}.tmp`]}}});
