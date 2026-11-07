@@ -22,10 +22,10 @@ import {TextReveal} from '../vendor/affectui/motion/text-reveal';
 import {LogoMarquee} from '../vendor/affectui/blocks/logo-marquee';
 import {TestimonialWall} from '../vendor/affectui/blocks/testimonial-wall';
 import type {GalleryItem} from './items';
-const face='/assets/preview-person.svg';const source='AffectUI';
+const face=`${import.meta.env.BASE_URL}assets/preview-person.svg`;const source='AffectUI';
 export const affectExtraItems:GalleryItem[]=[
  {id:'affect-agent-team',name:'Agent team',category:'AI',source,render:()=> <AgentTeam members={[{role:'Research',avatar:face},{role:'Planning',avatar:face},{role:'Review',avatar:face}]}/>},
- {id:'affect-cover-flow',name:'Cover flow',category:'Effects',source,render:()=> <CoverFlow items={['First','Second','Third'].map((title,id)=>({id,title,image:'/assets/preview-landscape.svg'}))} itemWidth={100} itemHeight={130}/>},
+ {id:'affect-cover-flow',name:'Cover flow',category:'Effects',source,render:()=> <CoverFlow items={['First','Second','Third'].map((title,id)=>({id,title,image:`${import.meta.env.BASE_URL}assets/preview-landscape.svg`}))} itemWidth={100} itemHeight={130}/>},
  {id:'affect-empty-calendar',name:'Empty calendar',category:'Controls',source,render:()=> <EmptyCalendar/>},
  {id:'affect-enrichment-orbit',name:'Enrichment orbit',category:'Effects',source,render:()=> <EnrichmentOrbit/>},
  {id:'affect-frost-cloud',name:'Frost cloud',category:'Effects',source,render:()=> <FrostCloud/>},
