@@ -1,2 +1,2 @@
 export interface Preferences { page:string; surface:string; input:string; text:string; muted:string; accent:string; success:string; error:string; warning:string; active:string; font:string; weight:number; heading:number; body:number; radius:number; spacing:number; speed:number; mainButton:'outlined'|'solid'|'soft'; secondaryButton:'text'|'outlined'|'soft'; saved:string[] }
-export type Category = 'All'|'Buttons'|'Inputs'|'Controls'|'Charts'|'Tables'|'Chat'|'AI'|'Avatars'|'Icons'|'Voice'|'Effects'|'Transitions'|'Lists and rows'|'Cards'|'Misc.'|'Requests';
+export type Category = 'All'|'Buttons'|'Inputs'|'Controls'|'Charts'|'Tables'|'Chat'|'AI'|'Avatars'|'Icons'|'Voice'|'Effects'|'Transitions'|'Lists and rows'|'Cards'|'Misc.';
